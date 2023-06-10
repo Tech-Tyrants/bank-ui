@@ -2,6 +2,7 @@
  
 from tkinter import *
 import os
+from PIL import Image, ImageTk
  
 # Designing window for registration
  
@@ -9,7 +10,16 @@ def register():
     global register_screen
     register_screen = Toplevel(main_screen)
     register_screen.title("Register")
-    register_screen.geometry("300x250")
+    register_screen.geometry("576x384")
+
+    
+     # Load the background image
+    image = Image.open(r'C:\Users\vigo4\Desktop\Projects\My Python quickies\Tkinter\tkinter-GUI-login\pexels-jessica-lewis-creative-583847.jpg')  # Replace "background_image.jpg" with your image path
+    image = image.resize((576, 384), Image.ANTIALIAS)  # Adjust the size of the image to fit the window
+    background_image = ImageTk.PhotoImage(image)
+
+    background_label = Label(register_screen, image=background_image)
+    background_label.place(x=0, y=0, relwidth=1, relheight=1)
  
     global username
     global password
@@ -38,7 +48,9 @@ def login():
     global login_screen
     login_screen = Toplevel(main_screen)
     login_screen.title("Login")
-    login_screen.geometry("300x250")
+    login_screen.geometry("576x384")
+
+
     Label(login_screen, text="Please enter details below to login").pack()
     Label(login_screen, text="").pack()
  
@@ -50,7 +62,9 @@ def login():
  
     global username_login_entry
     global password_login_entry
- 
+
+
+
     Label(login_screen, text="Username * ").pack()
     username_login_entry = Entry(login_screen, textvariable=username_verify)
     username_login_entry.pack()
@@ -105,7 +119,7 @@ def login_sucess():
     global login_success_screen
     login_success_screen = Toplevel(login_screen)
     login_success_screen.title("Success")
-    login_success_screen.geometry("150x100")
+    login_success_screen.geometry("576x384")
     Label(login_success_screen, text="Login Success").pack()
     Button(login_success_screen, text="OK", command=delete_login_success).pack()
  
@@ -148,9 +162,18 @@ def delete_user_not_found_screen():
 def main_account_screen():
     global main_screen
     main_screen = Tk()
-    main_screen.geometry("300x250")
+    main_screen.geometry("576x384")
     main_screen.title("Account Login")
-    Label(text="Select Your Choice", bg="blue", width="300", height="2", font=("Calibri", 13)).pack()
+    # Load the background image
+    image = Image.open(r'C:\Users\vigo4\Desktop\Projects\My Python quickies\Tkinter\tkinter-GUI-login\pexels-jessica-lewis-creative-583847.jpg')  # Replace "background_image.jpg" with your image path
+    image = image.resize((576, 384), Image.ANTIALIAS)  # Adjust the size of the image to fit the window
+    background_image = ImageTk.PhotoImage(image)
+
+    background_label = Label(main_screen, image=background_image)
+    background_label.place(x=0, y=0, relwidth=1, relheight=1)
+
+    Label(text="Welcome to your Bank App", width="300", height="2", font=("Calibri", 13), ).pack()
+    
     Label(text="").pack()
     Button(text="Login", height="2", width="30", command = login).pack()
     Label(text="").pack()
