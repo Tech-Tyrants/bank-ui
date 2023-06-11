@@ -43,11 +43,11 @@ class BankAppDashboard(tk.Tk):
         main_menu.pack()
         def get_option():
             selected_option = clicked.get()
-            print("Selected option is: ", selected_option)
+            # print("Selected option is: ", selected_option)
             if selected_option == "Savings":
                 self.withdraw_savings()
             else:
-                print("Nah")
+                self.withdraw_funds()
         confirm_button = tk.Button(confirm_window, text="Continue", command=get_option)
         confirm_button.pack(pady=5)
 
