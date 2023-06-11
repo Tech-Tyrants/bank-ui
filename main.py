@@ -14,8 +14,8 @@ def register():
 
     
      # Load the background image
-    image = Image.open(r'C:\Users\vigo4\Desktop\Projects\My Python quickies\Tkinter\tkinter-GUI-login\pexels-jessica-lewis-creative-583847.jpg')  # Replace "background_image.jpg" with your image path
-    image = image.resize((576, 384), Image.ANTIALIAS)  # Adjust the size of the image to fit the window
+    image = Image.open(r'./pexels-jessica-lewis-creative-583847.jpg')  # Replace "background_image.jpg" with your image path
+    image = image.resize((576, 384), Image.LANCZOS)  # Adjust the size of the image to fit the window
     background_image = ImageTk.PhotoImage(image)
 
     background_label = Label(register_screen, image=background_image)
@@ -34,6 +34,9 @@ def register():
     username_lable.pack()
     username_entry = Entry(register_screen, textvariable=username)
     username_entry.pack()
+    # clicked= StringVar()
+    # main_menu = OptionMenu(register_screen, clicked, "Currents", "Savings")
+    # main_menu.pack(pady=10)
     password_lable = Label(register_screen, text="Password * ")
     password_lable.pack()
     password_entry = Entry(register_screen, textvariable=password, show='*')
@@ -162,11 +165,11 @@ def delete_user_not_found_screen():
 def main_account_screen():
     global main_screen
     main_screen = Tk()
-    main_screen.geometry("576x384")
+    main_screen.geometry("700x500")
     main_screen.title("Account Login")
     # Load the background image
-    image = Image.open(r'C:\Users\vigo4\Desktop\Projects\My Python quickies\Tkinter\tkinter-GUI-login\pexels-jessica-lewis-creative-583847.jpg')  # Replace "background_image.jpg" with your image path
-    image = image.resize((576, 384), Image.ANTIALIAS)  # Adjust the size of the image to fit the window
+    image = Image.open(r'./pexels-jessica-lewis-creative-583847.jpg')  # Replace "background_image.jpg" with your image path
+    image = image.resize((700, 500), Image.LANCZOS)  # Adjust the size of the image to fit the window
     background_image = ImageTk.PhotoImage(image)
 
     background_label = Label(main_screen, image=background_image)
