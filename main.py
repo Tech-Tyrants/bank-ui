@@ -3,179 +3,133 @@
 from tkinter import *
 import os
 from PIL import Image, ImageTk
- 
-# Designing window for registration
- 
-def register():
-    global register_screen
-    register_screen = Toplevel(main_screen)
-    # register_screen = Tk()
-    register_screen.title("Register")
-    register_screen.geometry("576x384")
+from tkinter import messagebox
 
+ 
+
+
+def dashboard():
+    global dashboard_screen
+    dashboard_screen = Tk()
+    dashboard_screen.title("Bank App Dashboard")
+    dashboard_screen.geometry("576x384")
+
+
+    # Create the labels
+    balance_label = Label(dashboard_screen, text="Current Balance:", font=("Arial", 14)).pack()
+
+    current_balance_label = Label(dashboard_screen, text="", font=("Arial", 18, "bold"))
+    current_balance_label.pack()
+    current_balance_label['text'] = "0"
+
+
+    def confirm_account_type():
+        global confirm_window
+        confirm_window = Tk()
+        confirm_window.title("Confirm Account Type")
+        confirm_window.geometry("576x384")
+        clicked = StringVar()
+        account_type_label = Label(confirm_window, text="Confirm Your Accout Type Below")
+        account_type_label.pack()
+        main_menu = OptionMenu(confirm_window, clicked, "Currents", "Savings")
+        main_menu.pack()
+        def get_option():
+            selected_option = clicked.get()
+            print("Selected option is: ", selected_option)
+            if selected_option == "Savings":
+                withdraw_savings()
+            else:
+                withdraw_funds()
+        confirm_button = Button(confirm_window, text="Continue", command=get_option)
+        confirm_button.pack(pady=5)
+
+    def withdraw_savings():
+        withdraw_window = Tk()
+        withdraw_window.title("Withdraw Funds")
+        withdraw_window.geometry("576x384")
+        amount_label = Label(withdraw_window, text="Withdrawal amount: ", font=("Arial", 12))
+        amount_label.pack()
+        amount_entry = Entry(withdraw_window, font=("Arial", 12))
+        amount_entry.pack()
+        withdraw_button = Button(withdraw_window, text="Withdraw", font=("Arial", 12), command=lambda: process_withdrawal_savings(amount_entry.get(), withdraw_window))
+        withdraw_button.pack(pady=10)
+
+    def process_withdrawal_savings(amount, window):
+        try:
+            withdrawal_amount = float(amount)
+            if float(current_balance_label.cget("text")) == 0 or withdrawal_amount > float(current_balance_label.cget("text")):
+                # self.current_balance_label['text'] = "Insufficient funds"
+                messagebox.showerror("Error", "Insufficient funds")
+            elif withdrawal_amount > 5000:
+                messagebox.showinfo("Limit Exceeded", "You have exceeded the limit of 5000 per day")
+            else:
+                current_balance_label['text'] = float(current_balance_label.cget("text")) - withdrawal_amount
+                window.destroy()
+        except ValueError:
+            messagebox.showerror("Error", "Invalid withdrawal amount.")
+
+    def deposit_funds():
+        deposit_window =Tk()
+        deposit_window.title("Deposit Funds")
+        deposit_window.geometry("576x384")
+        amount_label =Label(deposit_window, text="Deposit Amount:", font=("Arial", 12))
+        amount_label.pack()
+
+        amount_entry =Entry(deposit_window, font=("Arial", 12))
+        amount_entry.pack()
+
+        deposit_button =Button(deposit_window, text="Deposit", font=("Arial", 12), command=lambda: process_deposit(amount_entry.get(), deposit_window))
+        deposit_button.pack(pady=10)
+
+    def withdraw_funds():
+        # Create a new window for the withdrawal form
+        withdraw_window =Tk()
+        withdraw_window.title("Withdraw Funds")
+        withdraw_window.geometry("576x384")
+
+        # Create the label and entry for the withdrawal amount
+        amount_label =Label(withdraw_window, text="Withdraw Amount:", font=("Arial", 12))
+        amount_label.pack()
+
+        amount_entry =Entry(withdraw_window, font=("Arial", 12))
+        amount_entry.pack()
+
+        # Create the withdraw button in the withdrawal window
+        withdraw_button =Button(withdraw_window, text="Withdraw", font=("Arial", 12), command=lambda: process_withdrawal(amount_entry.get(), withdraw_window))
+        withdraw_button.pack(pady=10)
+
+    def process_withdrawal(amount, window):
+        try:
+            withdrawal_amount = float(amount)
+            if float(current_balance_label.cget("text")) == 0 or withdrawal_amount > float(current_balance_label.cget("text")):
+                # self.current_balance_label['text'] = "Insufficient funds"
+                messagebox.showerror("Error", "Insufficient funds")
+            else:
+                current_balance_label['text'] = float(current_balance_label.cget("text")) - withdrawal_amount
+                window.destroy()
+        except ValueError:
+            messagebox.showerror("Error", "Invalid withdrawal amount.")
+
+    def process_deposit(amount, window):
+        try:
+            deposit_amount = float(amount)
+            current_balance_label['text'] = float(current_balance_label.cget('text')) + deposit_amount
+            window.destroy()
+        except:
+            messagebox.showerror("Error", "Invalid Deposit amount")
+            window.destroy()
+
+
+    # dashboard_screen.messagebox.showinfo("Welcome to Bank app", "Deposit at least 1000 to get started with your account")
+# Create the withdraw button
+    withdraw_button = Button(dashboard_screen, text="Withdraw", font=("Arial", 12), command=confirm_account_type)
+    withdraw_button.pack(pady=10)
+    #Deposit button
+    deposit_button = Button(dashboard_screen, text="Deposit", font=("Arial", 12), command=deposit_funds)
+    deposit_button.pack()
     
-    #  # Load the background image
-    image = Image.open(r'C:\Users\vigo4\Desktop\Projects\My Python quickies\Tkinter\tkinter-GUI-login\pexels-jessica-lewis-creative-583847.jpg')  # Replace "background_image.jpg" with your image path
-    image = image.resize((576, 384), Image.ANTIALIAS)  # Adjust the size of the image to fit the window
-    background_image = ImageTk.PhotoImage(image)
+    
 
-    background_label = Label(register_screen, image=background_image)
-    background_label.place(x=0, y=0, relwidth=1, relheight=1)
- 
-    global username
-    global password
-    global username_entry
-    global password_entry
-    username = StringVar()
-    password = StringVar()
- 
-    Label(register_screen, text="Sign Up with us!", width="300", height="2", font=("Calibri", 13), ).pack()
-
-    Label(register_screen, text="").pack()
-    Label(register_screen, text="").pack()
-    Label(register_screen, text="").pack()
-
-    username_lable = Label(register_screen, text="Username * ")
-    username_lable.pack()
-    username_entry = Entry(register_screen, textvariable=username)
-    username_entry.pack()
-    password_lable = Label(register_screen, text="Password * ")
-    password_lable.pack()
-    password_entry = Entry(register_screen, textvariable=password, show='*')
-    password_entry.pack()
-    Label(register_screen, text="").pack()
-    Button(register_screen, text="Register", width=10, height=1, bg="blue", command = register_user).pack()
- 
- 
-# Designing window for login 
- 
-def login():
-    global login_screen
-    login_screen = Toplevel(main_screen)
-    login_screen.geometry("576x384")
-    login_screen.title("Login")
-
-
-         # Load the background image
-    image = Image.open(r'C:\Users\vigo4\Desktop\Projects\My Python quickies\Tkinter\tkinter-GUI-login\pexels-jessica-lewis-creative-583847.jpg') # Replace "background_image.jpg" with your image path
-    image = image.resize((576, 384), Image.ANTIALIAS)  # Adjust the size of the image to fit the window
-    background_image = ImageTk.PhotoImage(image)
-
-    background_label = Label(login_screen, image=background_image)
-    background_label.place(x=0, y=0, relwidth=1, relheight=1)
-
-
-    Label(login_screen, text="Please Login", width="300", height="2", font=("Calibri", 13), ).pack()
-    Label(login_screen, text="").pack()
-    Label(login_screen, text="").pack()
-    Label(login_screen, text="").pack()
-
-
-
-
- 
-    global username_verify
-    global password_verify
- 
-    username_verify = StringVar()
-    password_verify = StringVar()
- 
-    global username_login_entry
-    global password_login_entry
-
-
-
-    Label(login_screen, text="Username * ").pack()
-    username_login_entry = Entry(login_screen, textvariable=username_verify)
-    username_login_entry.pack()
-    Label(login_screen, text="").pack()
-    Label(login_screen, text="Password * ").pack()
-    password_login_entry = Entry(login_screen, textvariable=password_verify, show= '*')
-    password_login_entry.pack()
-    Label(login_screen, text="").pack()
-    Button(login_screen, text="Login", width=10, height=1, command = login_verify).pack()
- 
-# Implementing event on register button
- 
-def register_user():
- 
-    username_info = username.get()
-    password_info = password.get()
- 
-    file = open(username_info, "w")
-    file.write(username_info + "\n")
-    file.write(password_info)
-    file.close()
- 
-    username_entry.delete(0, END)
-    password_entry.delete(0, END)
- 
-    Label(register_screen, text="Registration Success", fg="green", font=("calibri", 11)).pack()
- 
-# Implementing event on login button 
- 
-def login_verify():
-    username1 = username_verify.get()
-    password1 = password_verify.get()
-    username_login_entry.delete(0, END)
-    password_login_entry.delete(0, END)
- 
-    list_of_files = os.listdir()
-    if username1 in list_of_files:
-        file1 = open(username1, "r")
-        verify = file1.read().splitlines()
-        if password1 in verify:
-            login_sucess()
- 
-        else:
-            password_not_recognised()
- 
-    else:
-        user_not_found()
- 
-# Designing popup for login success
- 
-def login_sucess():
-    global login_success_screen
-    login_success_screen = Toplevel(login_screen)
-    login_success_screen.title("Success")
-    login_success_screen.geometry("576x384")
-    Label(login_success_screen, text="Login Success").pack()
-    Button(login_success_screen, text="OK", command=delete_login_success).pack()
- 
-# Designing popup for login invalid password
- 
-def password_not_recognised():
-    global password_not_recog_screen
-    password_not_recog_screen = Toplevel(login_screen)
-    password_not_recog_screen.title("Success")
-    password_not_recog_screen.geometry("150x100")
-    Label(password_not_recog_screen, text="Invalid Password ").pack()
-    Button(password_not_recog_screen, text="OK", command=delete_password_not_recognised).pack()
- 
-# Designing popup for user not found
- 
-def user_not_found():
-    global user_not_found_screen
-    user_not_found_screen = Toplevel(login_screen)
-    user_not_found_screen.title("Success")
-    user_not_found_screen.geometry("150x100")
-    Label(user_not_found_screen, text="User Not Found").pack()
-    Button(user_not_found_screen, text="OK", command=delete_user_not_found_screen).pack()
- 
-# Deleting popups
- 
-def delete_login_success():
-    login_success_screen.destroy()
- 
- 
-def delete_password_not_recognised():
-    password_not_recog_screen.destroy()
- 
- 
-def delete_user_not_found_screen():
-    user_not_found_screen.destroy()
- 
  
 # Designing Main(first) window
  
@@ -199,9 +153,9 @@ def main_account_screen():
     Label(text="", bg="black").pack()
     Label(text="", bg="black").pack()
     Label(text="", bg="black").pack()
-    Button(text="Login", height="2", width="30", command = login).pack()
-    Label(text="").pack()
-    Button(text="Register", height="2", width="30", command=register).pack()
+    # Button(text="Login", height="2", width="30", command = login).pack()
+    # Label(text="").pack()
+    Button(text="Get Started", height="2", width="30", command=dashboard).pack()
     main_screen.mainloop()
  
  
