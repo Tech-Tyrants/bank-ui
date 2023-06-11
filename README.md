@@ -1,5 +1,4 @@
-# tkinter-GUI-login 
 
-Login page using TKINTER (python)
+# bank-ui
 
-Made with ❤ in INDIA
+This is a bank ui with tkinter with features such as Depositing, Withdrawal from Currents and Savings, e.t.c.
