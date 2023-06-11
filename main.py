@@ -9,13 +9,14 @@ from PIL import Image, ImageTk
 def register():
     global register_screen
     register_screen = Toplevel(main_screen)
+    # register_screen = Tk()
     register_screen.title("Register")
     register_screen.geometry("576x384")
 
     
-     # Load the background image
-    image = Image.open(r'./pexels-jessica-lewis-creative-583847.jpg')  # Replace "background_image.jpg" with your image path
-    image = image.resize((576, 384), Image.LANCZOS)  # Adjust the size of the image to fit the window
+    #  # Load the background image
+    image = Image.open(r'C:\Users\vigo4\Desktop\Projects\My Python quickies\Tkinter\tkinter-GUI-login\pexels-jessica-lewis-creative-583847.jpg')  # Replace "background_image.jpg" with your image path
+    image = image.resize((576, 384), Image.ANTIALIAS)  # Adjust the size of the image to fit the window
     background_image = ImageTk.PhotoImage(image)
 
     background_label = Label(register_screen, image=background_image)
@@ -28,15 +29,16 @@ def register():
     username = StringVar()
     password = StringVar()
  
-    Label(register_screen, text="Please enter details below", bg="blue").pack()
+    Label(register_screen, text="Sign Up with us!", width="300", height="2", font=("Calibri", 13), ).pack()
+
     Label(register_screen, text="").pack()
+    Label(register_screen, text="").pack()
+    Label(register_screen, text="").pack()
+
     username_lable = Label(register_screen, text="Username * ")
     username_lable.pack()
     username_entry = Entry(register_screen, textvariable=username)
     username_entry.pack()
-    # clicked= StringVar()
-    # main_menu = OptionMenu(register_screen, clicked, "Currents", "Savings")
-    # main_menu.pack(pady=10)
     password_lable = Label(register_screen, text="Password * ")
     password_lable.pack()
     password_entry = Entry(register_screen, textvariable=password, show='*')
@@ -50,12 +52,27 @@ def register():
 def login():
     global login_screen
     login_screen = Toplevel(main_screen)
-    login_screen.title("Login")
     login_screen.geometry("576x384")
+    login_screen.title("Login")
 
 
-    Label(login_screen, text="Please enter details below to login").pack()
+         # Load the background image
+    image = Image.open(r'C:\Users\vigo4\Desktop\Projects\My Python quickies\Tkinter\tkinter-GUI-login\pexels-jessica-lewis-creative-583847.jpg') # Replace "background_image.jpg" with your image path
+    image = image.resize((576, 384), Image.ANTIALIAS)  # Adjust the size of the image to fit the window
+    background_image = ImageTk.PhotoImage(image)
+
+    background_label = Label(login_screen, image=background_image)
+    background_label.place(x=0, y=0, relwidth=1, relheight=1)
+
+
+    Label(login_screen, text="Please Login", width="300", height="2", font=("Calibri", 13), ).pack()
     Label(login_screen, text="").pack()
+    Label(login_screen, text="").pack()
+    Label(login_screen, text="").pack()
+
+
+
+
  
     global username_verify
     global password_verify
@@ -165,11 +182,11 @@ def delete_user_not_found_screen():
 def main_account_screen():
     global main_screen
     main_screen = Tk()
-    main_screen.geometry("700x500")
+    main_screen.geometry("576x384")
     main_screen.title("Account Login")
     # Load the background image
-    image = Image.open(r'./pexels-jessica-lewis-creative-583847.jpg')  # Replace "background_image.jpg" with your image path
-    image = image.resize((700, 500), Image.LANCZOS)  # Adjust the size of the image to fit the window
+    image = Image.open(r'C:\Users\vigo4\Desktop\Projects\My Python quickies\Tkinter\tkinter-GUI-login\pexels-jessica-lewis-creative-583847.jpg')  # Replace "background_image.jpg" with your image path
+    image = image.resize((576, 384), Image.ANTIALIAS)  # Adjust the size of the image to fit the window
     background_image = ImageTk.PhotoImage(image)
 
     background_label = Label(main_screen, image=background_image)
@@ -178,10 +195,13 @@ def main_account_screen():
     Label(text="Welcome to your Bank App", width="300", height="2", font=("Calibri", 13), ).pack()
     
     Label(text="").pack()
+    Label(text="", bg="black").pack()
+    Label(text="", bg="black").pack()
+    Label(text="", bg="black").pack()
+    Label(text="", bg="black").pack()
     Button(text="Login", height="2", width="30", command = login).pack()
     Label(text="").pack()
     Button(text="Register", height="2", width="30", command=register).pack()
- 
     main_screen.mainloop()
  
  
